@@ -1,0 +1,6 @@
+rootProject.name = 'moim'
+
+include 'moim-core'
+include 'moim-admin'
+include 'moim-api'
+include 'moim-batch'

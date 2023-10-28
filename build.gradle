@@ -1,0 +1,130 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.0.5'
+    id 'io.spring.dependency-management' version '1.1.0'
+}
+
+// Execution failed for task ':bootJar 이슈
+bootJar.enabled = false
+
+allprojects {
+    repositories {
+        mavenCentral()
+    }
+}
+
+tasks.named('test') {
+    useJUnitPlatform(
+    )
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+    group = 'com.jxx'
+    version = '0.0.1-SNAPSHOT'
+    sourceCompatibility = '17'
+    targetCompatibility = '17'
+    compileJava.options.encoding = 'UTF-8'
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+        //lombok
+        annotationProcessor 'org.projectlombok:lombok'
+        compileOnly 'org.projectlombok:lombok'
+        testCompileOnly 'org.projectlombok:lombok'
+        testAnnotationProcessor 'org.projectlombok:lombok'
+
+        implementation 'org.springframework.boot:spring-boot-starter'
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+}
+
+project(':moim-core') {
+
+    bootJar { enabled = false }
+    jar { enabled = true }
+
+    dependencies {
+        //database
+        runtimeOnly 'com.mysql:mysql-connector-j'
+        runtimeOnly 'com.h2database:h2'
+    }
+}
+
+
+project(':moim-admin') {
+
+    bootJar {
+        enabled = true
+    }
+    jar {
+        enabled = false
+    }
+
+    dependencies {
+        implementation project(':moim-core')
+        //web
+        implementation 'org.springframework.boot:spring-boot-starter-web'
+    }
+}
+
+project(':moim-batch') {
+
+    bootJar {
+        enabled = true
+    }
+    jar {
+        enabled = false
+    }
+
+    dependencies {
+        implementation project(':moim-core')
+        //web
+        implementation 'org.springframework.boot:spring-boot-starter-batch'
+        testImplementation 'org.springframework.batch:spring-batch-test'
+    }
+}
+
+project(':moim-batch') {
+
+    bootJar {
+        enabled = true
+    }
+    jar {
+        enabled = false
+    }
+
+    dependencies {
+        implementation project(':moim-core')
+        //web
+        implementation 'org.springframework.boot:spring-boot-starter-web'
+    }
+}
+
+project(':moim-api') {
+
+    bootJar {
+        enabled = true
+    }
+    jar {
+        enabled = false
+    }
+
+    dependencies {
+        implementation project(':moim-core')
+        //web
+        implementation 'org.springframework.boot:spring-boot-starter-web'
+    }
+}
