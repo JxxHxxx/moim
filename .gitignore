@@ -35,3 +35,7 @@ out/
 
 ### VS Code ###
 .vscode/
+/moim-core/src/**/resources/application.yml
+/moim-admin/src/**/resources/application.yml
+/moim-api/src/**/resources/application.yml
+/moim-batch/src/**/resources/application.yml
